@@ -15,6 +15,7 @@ if [ ! -d "$year" ]; then
     ln -s ../src/research_diary.sty .
     ln -s ../src/clean.sh clean
     ln -s ../src/compile_today.sh compile_today
+    ln -s ../src/usrcmd.tex .
     cd ..
 fi
 
