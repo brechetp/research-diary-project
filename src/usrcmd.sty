@@ -1,0 +1,487 @@
+\ProvidesPackage{usrcmd}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% user defined delimiters %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% from https://tex.stackexchange.com/questions/225562/declarepaireddelimiter-with-left-and-right#225564
+\newcommand{\DeclareAutoPairedDelimiter}[3]{%
+  \expandafter\DeclarePairedDelimiter\csname Auto\string#1\endcsname{#2}{#3}%
+  \begingroup\edef\x{\endgroup
+    \noexpand\DeclareRobustCommand{\noexpand#1}{%
+      \expandafter\noexpand\csname Auto\string#1\endcsname*}}%
+  \x}
+
+\DeclareAutoPairedDelimiter{\paren}{\lparen}{\rparen}           % (parentheses)
+\DeclarePairedDelimiter\ang{\langle}{\rangle}  %<angle brackets>UM467248824US
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}    %|absolute value|
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}   %||norm||
+\DeclareAutoPairedDelimiter{\bkt}{\lbrack}{\rbrack}             % [brackets]
+\DeclareAutoPairedDelimiter{\set}{\{}{\}}         % {set}
+\DeclareAutoPairedDelimiter{\open}{\rbrack}{\lbrack}         % {set}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% user defined operators %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\DeclareMathOperator*{\argmin}{\arg\!\min} % argmin
+\DeclareMathOperator*{\argmax}{\arg\!\max} % argmax
+\DeclareMathOperator*{\EE}{\mathbb{E}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% User defined commands %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\RR}{\mathbb{R}}
+% \newcommand{\RRinfty}{\RR \cup \set{\infty}}
+\newcommand{\RRinfty}{{ \overline{\RR} }}
+\newcommand{\one}{\mathbb{1}}
+\newcommand{\dirac}[1]{1_{\set{#1}}}
+\newcommand{\zero}{\mathbb{0}}
+\newcommand{\RRs}{\RR^{*}}
+\newcommand{\RRp}{\RR_{+}}
+\newcommand{\RRn}{\RR_{-}}
+\newcommand{\RRnm}{\RR^{nm}}
+\newcommand{\Sign}{\bm{\Sigma_n}}
+\newcommand{\Sigm}{\bm{\Sigma_m}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\Ns}{\mathbb{N}^{*}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\W}{\mathcal{W}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\E}{\mathcal{E}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\G}{\mathcal{G}}
+% \newcommand{\Es}{\E^{\star}}
+\newcommand{\Es}{\E^{*}}
+% \newcommand{\Fs}{\F^{\star}}
+\newcommand{\Fs}{\F^{*}}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\I}{\mathcal{I}}
+\newcommand{\Ic}{\I_{c}}
+% \renewcommand{\S}{\mathcal{S}}  % \S is the paragraph symbol
+\renewcommand{\H}{\mathcal{H}}  % H was?
+\newcommand{\X}{\mathcal{X}}
+% \newcommand{\X}{X}
+\newcommand{\Y}{\mathcal{Y}}
+\renewcommand{\P}{\mathcal{P}}  % warn \P was
+% \renewcommand{\S}{\mathcal{S}} % warn \S was ß ?
+% \renewcommand{\Ss}{\mathcal{S}} % warn \S was ß ?
+\newcommand{\sigmalg}[1]{{\Sigma_{#1}}}  % the sigma algebra of X
+\renewcommand{\prod}[2]{{#1 \times #2}}
+\newcommand{\XY}{\prod{X}{Y}}  % product space
+\newcommand{\ZY}{\prod{Z}{Y}}
+\newcommand{\ZX}{\prod{Z}{X}}
+\newcommand{\XX}{\prod{X}{X}}
+\newcommand{\ZZ}{\prod{Z}{Z}}
+\newcommand{\ZA}{Z_1}  % product space
+\newcommand{\ZB}{Z_2}  % product space
+\newcommand{\ZAY}{\ZA \times Y}  % product space
+\newcommand{\ZAX}{\ZA \times X}  % product space
+\newcommand{\ZBX}{\ZB \times X}  % product space
+\newcommand{\Mp}{\M_{+}}
+\newcommand{\Mpo}{\Mp^1}
+\newcommand{\MX}{\M(X)}
+\newcommand{\MY}{\M(Y)}
+\newcommand{\MXY}{\M(\XY)}
+\newcommand{\MpXY}{\Mp(\XY)}
+%\renewcommand{\H}{\text{\rmfamily H}}
+\renewcommand{\L}{\mathcal{L}}
+\newcommand{\Ls}{\conj{\L}}
+\newcommand{\Lc}{\L_{c}}
+\newcommand{\Lce}{\Lc^{\eps}}
+\newcommand{\Wc}{\W_{c}}
+\newcommand{\Wce}{\Wc^{\eps}}
+\newcommand{\Wice}{\Wc^{\eps, \lambda_1}}
+\newcommand{\Wace}{\Wc^{\eps, \lambda_2}}
+\renewcommand{\L}{\mathcal{L}}
+% \newcommand{\LL}{\mathscr{L}}
+\newcommand{\Ltwo}{L_2}
+\newcommand{\Lone}{L_1}
+\newcommand{\ltwo}{\ell_2}
+\newcommand{\ltwosq}{{\ltwo}^2}
+\newcommand{\lone}{\ell_1}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\Wp}{\W_{p}}
+\newcommand{\Wpp}{\Wp^{p}}
+\newcommand{\Wone}{\W_{1}}
+\newcommand{\Wtwo}{\W_{2}}
+\newcommand{\Wtwosq}{\Wtwo^{2}}
+\newcommand{\We}{\W_{\varepsilon}}
+\newcommand{\Wpe}{\W_{p,\varepsilon}}
+\newcommand{\phibis}{\phi}
+\renewcommand{\phi}{\varphi}
+
+\newcommand{\wrt}{\text{\rmfamily{w.r.t. }}}
+\renewcommand{\t}[1]{\mathrm{#1}}
+\newcommand{\trm}[1]{\text{\rmfamily{#1}}}
+\newcommand{\op}[1]{\operatorname #1}
+% \newcommand{\E}{\text{\rmfamily E}}
+% \newcommand{\E}{E}
+\newcommand{\ED}{E_\t{D}}
+\newcommand{\EP}{E_\t{P}}
+\newcommand{\EPe}{{\EP^\eps}}
+\newcommand{\EDe}{{\ED^\eps}}
+\newcommand{\DP}{{ D_\t{P} }}
+\newcommand{\DD}{{ D_\t{D} }}
+\newcommand{\DPe}{{ \DP^\eps }}
+\newcommand{\DDe}{\DD^\eps}
+\newcommand{\Le}{\L^{\varepsilon}}
+\newcommand{\He}{\H^{\eps}}  % H epsilon
+\newcommand{\Hte}{\tilde{\H}^{\eps}}  % H tilde epsilon
+
+\newcommand{\SL}{\t{SL}}
+\newcommand{\SLc}{\SL_{c}}
+\newcommand{\SLce}{\SL_{c}^\eps}
+\newcommand{\SLace}{\SLc^{\eps, \lambda_2}}
+\newcommand{\SLice}{\SLc^{\eps, \lambda_1}}
+\newcommand{\MMD}{\t{MMD}}
+\newcommand{\f}{f_{\eps}}  % reg function
+% \newcommand{\weaks}{$\text{weak-}^{\star}$ }
+\newcommand{\weaks}{$\text{weak-}^{*}$ }
+\newcommand{\wscvg}{\stackrel{\ast}{\rightharpoonup}}
+\newcommand{\cvg}{\underset{\infty}{\to}}
+\newcommand{\Rs}{\R ^{*}}
+\newcommand{\Rss}{\Rs ^{*}}
+\newcommand{\pent}{p_{\mathrm{ent}}}
+\newcommand{\ptwo}{p_{\ltwo}}
+\newcommand{\Xs}{\conj{\X}}
+\newcommand{\xs}{x^{*}}
+\newcommand{\ys}{y^{*}}
+% \newcommand{\fs}{f^{\star}}
+\newcommand{\assign}{:=}
+\newcommand{\Ys}{\conj{\Y}}
+\newcommand{\fs}{f^{*}}
+\newcommand{\gs}{g^{*}}
+\newcommand{\As}{A^{*}}
+\newcommand{\conj}[1]{{#1}^{*}}
+\newcommand{\adj}[1]{{ {#1}^{\star} }}
+\newcommand{\transpose}[1]{{ {#1}^{\top} }}
+\newcommand{\inv}[1]{{{#1}^{-1}}}
+\newcommand{\gammah}{\hat{\gamma}}
+\newcommand{\gammat}{\tilde{\gamma}}
+\newcommand{\gammab}{\bar{\gamma}}
+\newcommand{\cb}{\bar{c}}
+\newcommand{\ct}{\tilde{c}}
+\newcommand{\hh}{\hat{h}}
+\newcommand{\uh}{\hat{u}}
+\newcommand{\ut}{\tilde{u}}
+\newcommand{\qh}{\hat{q}}
+\newcommand{\sh}{\hat{s}}
+\newcommand{\ph}{\hat{p}}
+\newcommand{\vh}{\hat{v}}
+\newcommand{\vt}{\tilde{v}}
+\newcommand{\wh}{\hat{w}}
+% \newcommand{\Ks}{K^{*}}
+% \newcommand{\Gs}{G^{*}}
+% \newcommand{\Fs}{F^{*}}
+\newcommand{\viol}[1]{\text{\rmfamily viol}_{#1}^c}  % violation function
+\newcommand{\pie}{{ {\pi}^{\eps} }}
+\newcommand{\pite}{{ \tilde{\pi}^{\eps} }}
+\newcommand{\indice}{{\iota^{\varepsilon}_{c}}}
+% \newcommand{\indic}[2]{\iota_{#1}{\paren{#2}}}  % indicator function
+\newcommand{\indic}[2]{\iota_{#1}{\paren{#2}}}  % indicator function
+\newcommand{\ConvNet}{\t{Conv}_\gamma}
+\newcommand{\FcNet}{W_\theta}
+\newcommand{\oprod}[2]{{#1 \otimes #2}}
+\newcommand{\joint}[2]{\paren{#1,#2}}
+% \newcommand{\Z}{\mathcal{Z}}
+\newcommand{\Z}{Z}
+\newcommand{\intX}[1]{\int_{X} #1}
+\newcommand{\intY}[1]{\int_{Y} #1}
+\newcommand{\intZ}[1]{\int_{\Z} #1}
+\newcommand{\intXY}[1]{{\int_{X \times Y} #1}}
+\newcommand{\intZY}[1]{\int_{\Z \times Y} #1}
+\newcommand{\radon}[2]{\frac{\dd{#1}}{\dd{#2}}}
+\newcommand{\KL}[2]{\t{KL}\paren{#1\,\mid\,#2}}
+\newcommand{\KLf}[4]{{\int_{#4}{\bkt{\log{\paren{\radon{#1}{#2}(#3)}-1}} \dd{#1}(#3)}}}
+\newcommand{\intf}[4]{\int_{#4}{#2(#3) \dd{#1}(#3)}}
+
+\newcommand{\seqq}[4]{\set{#1_#2}_{#2=#3}^{#4}}
+\newcommand{\seq}[2]{\set{#1_#2}}
+\newcommand{\tKL}{\trm{KL}}
+\newcommand{\tphi}{$\phi$}
+\newcommand{\tDphi}{$\D_\phi$}
+\newcommand{\Dphi}[2]{\D_\phi(#1\,\mid\,#2)}
+\newcommand{\DKL}[2]{\D_{\phiKL}(#1\,\mid\,#2)}
+\newcommand{\tDKL}{{$\D_{\phiKL}$ }}
+\newcommand{\Dchisq}[2]{\D_{\chisq}(#1\,\mid\,#2)}
+\newcommand{\Dchisqf}[4]{\frac{1}{2}{\int_{#4}{\paren{\radon{#1}{#2}(#3)}^{2} \dd{#2}(#3)}}}
+\newcommand{\chisq}{{ \chi^2 }}
+% \newcommand{\chisqf}{{ \chi^2 }}
+\newcommand{\phiKL}{{\phi_{\tKL}}}
+\newcommand{\phichisq}{{ \phi_{\chisq} }}
+\newcommand{\Rent}{\R_{\mathrm{ent}}}
+% \newcommand{\Rtwo}{\R_{\ltwo}}
+\newcommand{\Rtwo}{\R_{\mathrm{quad}}}
+\newcommand{\RKL}{R_{\tKL}}
+\newcommand{\Rchisq}{R_{\chisq}}
+%\newcommand{\posi}[1]{\Set{#1}_{+}}
+\newcommand{\posi}[1]{\left\{ #1 \right\}_{+}}
+\newcommand{\id}{\text{\rmfamily id}}
+\newcommand{\dz}{d_{\t{latent}}}
+\newcommand{\dcat}{d_{\text{\rmfamily cat}}}
+\newcommand{\ncat}{n_{\text{\rmfamily cat}}}
+\newcommand{\dgauss}{d_{\text{\rmfamily{gauss}}}}
+\newcommand{\duni}{d_{\text{\rmfamily{uni}}}}
+\newcommand{\dtot}{d_{\text{\rmfamily{tot}}}}
+\newcommand{\todo}[1]{\text{\textbf{\Large{!!TODO}    \normalsize{#1}}}}
+
+\newcommand{\Gauss}{\mathcal{N}}  % normaal distribution
+\newcommand{\Uni}{\mathcal{U}}  % uniorm distribution
+\newcommand{\Cat}{\text{\rmfamily Cat}}  % uniorm distribution
+\newcommand{\Zcat}{\Z_{\text{\rmfamily Cat}}}  % uniorm distribution
+\newcommand{\Zgauss}{\Z_{\text{\rmfamily Gauss}}}  % uniorm distribution
+\newcommand{\Zuni}{\Z_{\text{\rmfamily Uni}}}  % uniorm distribution
+\newcommand{\Zinfo}{\Z_{1}}  % uniorm distribution
+\newcommand{\Znoise}{\Z_{2}}  % uniorm distribution
+
+\renewcommand{\P}{\mathcal{P}}
+% \newcommand{\Q}{\t{Q}}
+% \newcommand{\Q}{\t{Q}}
+% \newcommand{\Qnn}{\texttt{Q}}
+\newcommand{\Qnn}{Q}
+% \newcommand{\QAnn}{\Qnn_\texttt{1}}
+\newcommand{\QAnn}{\Qnn_1}
+% \newcommand{\QBnn}{\Qnn_\texttt{2}}
+\newcommand{\QBnn}{\Qnn_2}
+% \newcommand{\Gnn}{\texttt{G}}
+\newcommand{\Gnn}{G}
+% \newcommand{\Dnn}{\texttt{D}}
+\newcommand{\Dnn}{D}
+% \newcommand{\DAnn}{\Dnn_\texttt{1}}
+\newcommand{\DAnn}{\Dnn_1}
+% \newcommand{\DBnn}{\Dnn_\texttt{2}}
+\newcommand{\DBnn}{\Dnn_2}
+% \newcommand{\spec}[1]{{#1}^{\texttt{(spec)}}}
+\newcommand{\spec}[1]{{#1}^{\t{(spec)}}}
+% \newcommand{\shared}[1]{{#1}^{\texttt{(shared)}}}
+\newcommand{\shared}[1]{{#1}^{\t{(shared)}}}
+\newcommand{\Qspec}{\spec{\Qnn}}
+\newcommand{\QAspec}{\spec{\QAnn}}
+\newcommand{\QBspec}{\spec{\QBnn}}
+\newcommand{\Dspec}{\spec{\Dnn}}
+\newcommand{\Dshared}{\shared{\Dnn}}
+
+\newcommand{\px}{{p_{1}}}
+\newcommand{\py}{{p_{2}}}
+\newcommand{\from}{\colon\:}
+\newcommand{\st}{\colon \:}
+\newcommand{\dotp}[2]{\ang*{#1, #2}}
+\newcommand{\dotd}[2]{\ang*{#1 \mid #2}}
+% \newcommand{\dotp}[2]{\ang*{#1 \mid #2}}
+% \newcommand{\dotp}[2]{\ang*{#1 \mid #2}}
+% \newcommand{\dotpp}[3]{\ang*{#1 \mid #2}_{#3}}
+% vector notations
+\renewcommand{\aa}{\bm{a}} % WARN \aa is usually for angstrom unit
+\newcommand{\bb}{\bm{b}}
+\newcommand{\uu}{\bm{u}}
+\newcommand{\vv}{\bm{v}}
+\newcommand{\ww}{\bm{w}}
+\newcommand{\pp}{\bm{p}}
+\newcommand{\xx}{\bm{x}}
+\newcommand{\xz}{x_{i_0}}  % x zero
+\newcommand{\yz}{y_{j_0}}  % y zero
+\newcommand{\yy}{\bm{y}}
+\newcommand{\zz}{\bm{z}}
+\newcommand{\cc}{\bm{c}}
+\newcommand{\qq}{\bm{q}}
+%\newcommand{\PP}{\bm{P}}
+\renewcommand{\gg}{\bm{g}} % WARN \gg is >> usually
+% \newcommand{\al}{\alpha}
+% \newcommand{\be}{\beta}
+% \newcommand{\ga}{\gamma}
+% \newcommand{\aal}{\bm{\alpha}}
+% \newcommand{\bbe}{\bm{\beta}}
+% \newcommand{\gga}{\bm{\gamma}}
+% \newcommand{\tth}{\bm{\theta}}
+% \newcommand{\UU}{{U_{\alpha}}}
+% \newcommand{\UUFc}{{U^{(\t{fc})}_{\alpha_\t{fc}}}}
+% \newcommand{\VVFc}{{V^{(\t{fc})}_{\beta_\t{fc}}}}
+% \newcommand{\UUa}{{U^{(1)}_{\alpha_1}}}
+% \newcommand{\UUb}{{U^{(2)}_{\alpha_2}}}
+% \newcommand{\UUc}{{U^{(3)}_{\alpha_3}}}
+% \newcommand{\UUi}{{U^{(i)}_{\alpha_i}}}
+% \newcommand{\DNet}{{D_{\theta}}}
+% \newcommand{\UUn}[1]{{U_{\alpha^{(#1)}}}}
+% \newcommand{\UUan}[1]{{U^{(1)}_{\alpha_1^{(#1)}}}}
+% \newcommand{\UUbn}[1]{{U^{(2)}_{\alpha_2^{(#1)}}}}
+% \newcommand{\UUcn}[1]{{U^{(3)}_{\alpha_3^{(#1)}}}}
+% \newcommand{\UUin}[1]{U^{(i)}_{\alpha_i^{(#1)}}}
+% \newcommand{\VV}{{ V_{\beta} }}
+% \newcommand{\VVn}[1]{{ V_{\beta^{(#1)}} }}
+% \newcommand{\g}{{ g_{\theta} }}
+% \newcommand{\GG}{{ G_{\theta} }}
+% \newcommand{\GGn}[1]{{ G_{\theta^{(#1)}} }}
+%\newcommand\eqdef{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\rmfamily def.}}}{=}}}
+\newcommand\eqdef{\triangleq}
+\newcommand{\iso}{\overset{\sim}{=}}
+% \newcommand{\isosubset}{\overset{\sim}{\subset}}
+\newcommand{\isosubset}{\precsim}
+\newcommand\eeq{}
+\newcommand\musteq{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\small\rmfamily !}}}{=}}}
+\newcommand{\dom}[1]{\t{dom}(#1)}
+\newcommand{\mean}{\t{mean}}
+% \newcommand{\dim}{\t{dim}}
+\newcommand{\rng}[1]{\t{range}(#1)}
+\newcommand{\ri}[1]{\t{ri}(#1)}
+\newcommand{\spt}[1]{\t{spt}(#1)}
+%\newcommand{\mod}[2]{#1\,\text{\serif mod}\;#2}
+\renewcommand{\mod}[2]{#1\,\t{mod}\;#2}
+\newcommand{\iirange}[2]{\llbracket #1, #2 \rrbracket}
+\newcommand{\irange}[1]{\llbracket #1 \rrbracket}
+\newcommand{\range}[2]{\bkt{ #1,#2 }}
+
+%\newcommand{\d}[2]{\,\text{d}{#1(#2)}}  % infinitesimal operator
+\newcommand{\proj}[1]{{{\t{proj}}_{#1}}}  % projection notation
+\newcommand{\projZAX}{\proj{\ZAX}}
+\newcommand{\projZBX}{\proj{\ZBX}}
+\newcommand{\projZ}{\proj{\Z}}
+\newcommand{\projZA}{\proj{\ZA}}
+\newcommand{\projY}{\proj{Y}}
+\newcommand{\projX}{\proj{X}}
+\newcommand{\dd}[1]{\, \t{d} #1}  % infinitesimal operator
+\renewcommand{\d}{\, \t{d}}  % infinitesimal operator
+%\renewcommand{\d}[2]{\, \text{d} #1(#2)}  % infinitesimal operator
+\newcommand{\dmu}{\d{\mu}( x )}  % infinitesimal operator
+\newcommand{\dnu}{\d{\nu}( y )}  % infinitesimal operator
+\newcommand{\dzeta}{\d{\zeta}( z )}  % infinitesimal operator
+\newcommand{\dpi}{\d{\pi}(x, y)}  % infinitesimal operator
+\newcommand{\muxnu}{\oprod{\mu}{\nu}}
+\newcommand{\dmuxnu}{{\dd{\muxnu}{(x, y)}}}% infinitesimal operator
+\newcommand{\zetaxnu}{\oprod{\zeta}{\nu}}
+\newcommand{\zetaxzeta}{\oprod{\zeta}{\zeta}}
+\newcommand{\dzetaxnu}{{\dd{\zetaxnu}{(z, y)}}}% infinitesimal operator
+\newcommand{\dpie}{\d{\pi}^{\eps}}  % infinitesimal operator
+\newcommand{\dpite}{\d{\tilde{\pi}^{\eps}}}  % infinitesimal operator
+\newcommand{\jacob}[1]{\partial_{#1}} % jacobian
+\newcommand{\grad}[1]{\nabla_{#1}} % gradient
+\newcommand{\deriv}[2]{\frac{d #1}{d #2}}
+\newcommand{\pf}[1]{{#1}_{\sharp}}  % push forward operator
+\newcommand{\pb}[1]{{#1}^{\sharp}}  % pull back operator
+\newcommand{\pfs}[1]{\left(\pf{#1}\right)^{*}}  % push forward operator
+\newcommand{\ppf}[1]{({#1})_{\sharp}}  % push forward operator
+\newcommand{\aew}[1]{\; #1\mathrm{-a. e.}}
+
+%%%%%%%%%%%% ASTRONOMY %%%%%%%%%%%%%%%%
+% \newcommand{\Msun}{M_\odot}
+% \newcommand{\Lsun}{L_\odot}
+% \newcommand{\Rsun}{R_\odot}
+% \newcommand{\Mearth}{M_\oplus}
+% \newcommand{\Learth}{L_\oplus}
+% \newcommand{\Rearth}{R_\oplus}
+%%%%%%%%%%% MATHEMATICS %%%%%%%%%%%%%%%
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\eqnarr}{\begin{eqnarray}}
+\newcommand{\eqnend}{\end{eqnarray}}
+\newcommand{\bigO}{\mathcal{O}}
+
+%%%%%%%%% NEW ENVIRONMENTS %%%%%%%%%%%%
+\newenvironment{bullets}{
+\begin{itemize}
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}{\end{itemize}}
+\newenvironment{numlist}{
+\begin{enumerate}
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt} \setlength{\parsep}{0pt} }{\end{enumerate}}
+\newenvironment{code}{
+\begin{quote}\begin{framed}
+}{\end{framed}\end{quote}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Equation numbering %%
+%%%%%%%%%%%%%%%%%%%%%%%%
+% from https://tex.stackexchange.com/questions/42726/align-but-show-one-equation-number-at-the-end
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% circled numbers with tkz %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand*{\circled}[1]{\tikz[baseline=(char.base)]{
+\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Theorems and definitions %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \crefname{section}{\S}{\S\S}
+% theorem style
+\newtheoremstyle{break}
+{\topsep}{\topsep}%
+{\itshape}{}%
+{\bfseries}{}%
+{\newline}{}
+
+\newtheoremstyle{myplainstyle}% name
+  {6pt}%Space above
+  {6pt}%Space below
+  {\itshape}%Body font
+  {3pt}%Indent amount
+  {\bfseries}% Theorem head font
+  {}%Punctuation after theorem head
+  {3pt}%Space after theorem head 2
+  {}%Theorem head spec (can be left empty, meaning ‘normal’)
+
+% \theoremstyle{mystyle}
+%\theoremstyle{mystyle}
+\newtheoremstyle{myremstyle}% name
+  {6pt}%Space above
+  {6pt}%Space below
+  {}%Body font
+  {0pt}%Indent amount
+  {\itshape}% Theorem head font
+  {.}%Punctuation after theorem head
+  { }%Space after theorem head 2
+  {}%Theorem head spec (can be left empty, meaning ‘normal’)
+
+\newtheoremstyle{mydefstyle}% name
+  {6pt}%Space above
+  {6pt}%Space below
+  {}%Body font
+  {0pt}%Indent amount
+  {\bfseries}% Theorem head font
+  {.}%Punctuation after theorem head
+  { }%Space after theorem head 2
+  {}%Theorem head spec (can be left empty, meaning ‘normal’)
+
+% \theoremstyle{definition}
+\theoremstyle{mydefstyle}
+\newtheorem{defn}{Definition}
+\newtheorem*{expl}{Example}
+
+% \crefname{align}{equation}{equations}
+% \theoremstyle{break}  % in order to break between the theorems
+\theoremstyle{myplainstyle}  % https://www.overleaf.com/learn/latex/Theorems_and_proofs#Reference_guide
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}{Proposition}
+\newtheorem{lem}{Lemma}
+\newtheorem{cor}{Corrolary}
+\newtheorem{fac}{Fact}
+
+\theoremstyle{myremstyle}
+\newtheorem*{rem}{Remark}
+\newtheorem*{rems}{Remarks}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Meta organizing the source file
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\subsecinput}[3][]{
+% new command for input of a section into a file
+\begin{subsection}[#1]{#2}
+    \protect{\input{#3}}
+\end{subsection}
+}
+
+% from https://tex.stackexchange.com/questions/83509/hfill-in-math-mode
+\makeatletter
+\newcommand{\pushright}[1]{\ifmeasuring@#1\else\omit\hfill$\displaystyle#1$\fi\ignorespaces}
+\newcommand{\pushleft}[1]{\ifmeasuring@#1\else\omit$\displaystyle#1$\hfill\fi\ignorespaces}
+\makeatother
