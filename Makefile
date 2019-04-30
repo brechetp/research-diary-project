@@ -26,15 +26,17 @@ DAYTD := $(shell date +%d)
 RM := rm -rf
 SHELL := /bin/bash
 #
-FNAMETD := $(YEARTD)-$(MONTHTD)-$(DAYTD)
+DATE := $(YEARTD)-$(MONTHTD)-$(DAYTD)
 FILE := main
 OUT  := build
 export TEXINPUTS := ./src/:$(TEXINPUTS)
 # OUTTD  := $(YEARTD)
 
-# TEXFILE := $(YEARTD)/$(FNAMETD).tex
-FILETD := $(YEARTD)/$(FNAMETD)
+# TEXFILE := $(YEARTD)/$(DATE).tex
+FILETD := $(YEARTD)/$(DATE)
 ALL := $(wildcard $(YEARTD)/*.tex)
+# MEETING := $(YEARTD)/$(DATE)-meeting
+MEETING := $(YEARTD)/2019-04-30-meeting
 # LOGFILE := $(YEAR)-Research-Diary.log
 # DVIFILE := $(YEAR)-Research-Diary.dvi
 # PSFILE := $(YEAR)-Research-Diary.ps
@@ -65,6 +67,12 @@ today:
 entry:
 	./add_entry -f
 	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(FILETD)
+
+.PHONY: meeting
+meeting:
+	# ./add_meeting assumes the meeting is already added otherwise overwrite the
+	# correct date
+	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(MEETING)
 
 .PHONY: all
 all:
