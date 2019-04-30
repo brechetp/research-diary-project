@@ -8,34 +8,124 @@
 %%                                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\usepackage{fancyhdr}
-\usepackage[latin1]{inputenc}
-\usepackage{amsmath}
-\usepackage{amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+% \usepackage[sc]{mathpazo}  % font for math in palatino
+\usepackage[ngerman,american]{babel}
+\usepackage[autostyle]{csquotes}  % quoting package
+\usepackage[%
+  backend=biber,
+  url=false,
+  style=authoryear,
+  maxnames=2,
+  minnames=1,
+  maxbibnames=99,
+  giveninits,
+  uniquename=init]{biblatex} % TODO: adapt citation style
+\usepackage{fancyhdr}  % headings
+
+% pseudocode environment
+\usepackage{algorithm}
+%\usepackage{algorithmic}
+\usepackage{algpseudocode}
+
+% \usepackage[colorlinks]{hyperref}
+\usepackage{bm} % for bold math symbols
+\usepackage{bbold}
+\usepackage{mathtools} % for the new delimiters
+\usepackage{makeidx}
+
+\usepackage{stmaryrd}
+\usepackage[super]{nth} % for st, nd, rd, th subscripts
+
+% https://tex.stackexchange.com/questions/40/how-do-i-label-different-rows-or-columns-of-a-matrix-using-braces
+\usepackage{amsmath} % math environment, includes align DOES NOT WORK WITH NATH
 \usepackage{amssymb}
+\usepackage{amsthm} % for theorem and definition environement
+\usepackage{array}
+\usepackage[noabbrev]{cleveref}
+
+% \usepackage{amsmath}
+\usepackage{amsfonts}
+% \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage[hmargin=2cm,vmargin=2.5cm]{geometry}
 \usepackage{multirow}
 \usepackage{wrapfig}
-\usepackage{epsfig}
+% \usepackage{epsfig}  % for obsolete graphics?
+% for adjust box width graphics
+\usepackage[export]{adjustbox}
+\usepackage{float}
+
+% beak equation package for left and right on multiple lines
+\usepackage{breqn}
 \usepackage{framed}
-\usepackage{textcomp}
+% \usepackage{textcomp}  % obsolete, as part of the distro?
 \usepackage{color}
-\usepackage{booktabs}
-\usepackage[usenames,dvipsnames]{pstricks}
+\usepackage{subcaption}  % the subcaption package % ADDED
+\usepackage{scrhack} % necessary for listings package
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{booktabs}  % better tables
+\usepackage[final]{microtype}
+\usepackage{caption}
+% \usepackage[usenames,dvipsnames]{pstricks}
 \definecolor{darkblue}{RGB}{47,68,117}
 \definecolor{lightgray}{gray}{0.95}
+
+% Define TUM corporate design colors
+% Taken from http://portal.mytum.de/corporatedesign/index_print/vorlagen/index_farben
+\definecolor{TUMBlue}{HTML}{0065BD}
+\definecolor{TUMSecondaryBlue}{HTML}{005293}
+\definecolor{TUMSecondaryBlue2}{HTML}{003359}
+\definecolor{TUMBlack}{HTML}{000000}
+\definecolor{TUMWhite}{HTML}{FFFFFF}
+\definecolor{TUMDarkGray}{HTML}{333333}
+\definecolor{TUMGray}{HTML}{808080}
+\definecolor{TUMLightGray}{HTML}{CCCCC6}
+\definecolor{TUMAccentGray}{HTML}{DAD7CB}
+\definecolor{TUMAccentOrange}{HTML}{E37222}
+\definecolor{TUMAccentGreen}{HTML}{A2AD00}
+\definecolor{TUMAccentLightBlue}{HTML}{98C6EA}
+\definecolor{TUMAccentBlue}{HTML}{64A0C8}
+
 \usepackage{hyperref}
 \hypersetup{
-    pdftitle={Research Diary},                    % title
-    pdfauthor={\userName $\;$ (\institution)},    % author
-    pdfsubject={Physics \& Astronomy},            % subject
+    % pdftitle={Research Diary},                    % title
+    % pdfauthor={\userName $\;$ (\institution)},    % author
+    % pdfsubject={Physics \& Astronomy},            % subject
     colorlinks=true,        % false: boxed links; true: colored links
     linkcolor=darkblue,     % color of internal links
     citecolor=green,        % color of links to bibliography
     filecolor=magenta,      % color of file links
     urlcolor=blue           % color of external links
 }
+
+% Settings for pgfplots
+\pgfplotsset{compat=newest}
+\pgfplotsset{
+  % For available color names, see http://www.latextemplates.com/svgnames-colors
+  cycle list={TUMBlue\\TUMAccentOrange\\TUMAccentGreen\\TUMSecondaryBlue2\\TUMDarkGray\\},
+}
+\usepgfplotslibrary{groupplots}  % see https://github.com/nschloe/matplotlib2tikz
+\usepgfplotslibrary{dateplot}
+
+% Settings for lstlistings
+\lstset{%
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  autogobble,
+  keywordstyle=\bfseries\color{TUMBlue},
+  stringstyle=\color{TUMAccentGreen}
+}
+
+\usepackage{enumitem}  % for numbering the enumerate with custom symbols tex.stackexchange.com/questions/7032/good-way-to-make-textcircled-numbers
+
+% graphics path
+\graphicspath{{figures/}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Notes on use of hyperlinks:
@@ -46,20 +136,20 @@
 
 \pagestyle{fancy}
 \setlength\parindent{0in}
-\setlength\parskip{0.1in} 
+\setlength\parskip{0.1in}
 \setlength\headheight{15pt}
 
 %%%%%%%%%%% HEADER / FOOTER %%%%%%%%%%%
 \rhead{\workingDate}
-\chead{\textsc{Research Diary}}
-\lhead{\textsc{\userName}}
+% \chead{\textsc{Research Diary}}
+% \lhead{\textsc{\userName}}
 \rfoot{\textsc{\thepage}}
 \cfoot{\textit{Last modified: \today}}
-\lfoot{\textsc{\institution}}
+% \lfoot{\textsc{\institution}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%% NEW COMMANDS %%%%%%%%%%%%%%
-\newcommand{\logoEPS}{%
+\newcommand{\logoEPS}{% useless?
   \noindent % University Logo
   \begin{wrapfigure}{r}{0.1\textwidth}
     \vspace{-38pt}
@@ -81,37 +171,4 @@
   \end{wrapfigure}
 }
 
-%%%%%%%%%%%% ASTRONOMY %%%%%%%%%%%%%%%%
-\newcommand{\Msun}{M_\odot}
-\newcommand{\Lsun}{L_\odot}
-\newcommand{\Rsun}{R_\odot}
-\newcommand{\Mearth}{M_\oplus}
-\newcommand{\Learth}{L_\oplus}
-\newcommand{\Rearth}{R_\oplus}
-%%%%%%%%%%% MATHEMATICS %%%%%%%%%%%%%%%
-\newcommand{\grad}{\nabla}
-\newcommand{\be}{\begin{equation}}
-\newcommand{\ee}{\end{equation}}
-\newcommand{\bea}{\begin{eqnarray}}
-\newcommand{\eea}{\end{eqnarray}}
-\newcommand{\eqnarr}{\begin{eqnarray}}
-\newcommand{\eqnend}{\end{eqnarray}}
-\newcommand{\deriv}[2]{\frac{d #1}{d #2}}
-\newcommand{\bigO}{\mathcal{O}}
-
-%%%%%%%%% NEW ENVIRONMENTS %%%%%%%%%%%%
-\newenvironment{bullets}{
-\begin{itemize}
-  \setlength{\itemsep}{1pt}
-  \setlength{\parskip}{0pt}
-  \setlength{\parsep}{0pt}
-}{\end{itemize}}
-\newenvironment{numlist}{
-\begin{enumerate}
-  \setlength{\itemsep}{1pt}
-  \setlength{\parskip}{0pt} \setlength{\parsep}{0pt} }{\end{enumerate}}
-\newenvironment{code}{
-\begin{quote}\begin{framed}
-}{\end{framed}\end{quote}}
-                           
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

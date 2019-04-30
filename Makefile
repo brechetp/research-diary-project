@@ -29,10 +29,12 @@ SHELL := /bin/bash
 FNAMETD := $(YEARTD)-$(MONTHTD)-$(DAYTD)
 FILE := main
 OUT  := build
-OUTTD  := $(YEARTD)
+export TEXINPUTS := ./src/:$(TEXINPUTS)
+# OUTTD  := $(YEARTD)
 
 # TEXFILE := $(YEARTD)/$(FNAMETD).tex
 FILETD := $(YEARTD)/$(FNAMETD)
+ALL := $(wildcard $(YEARTD)/*.tex)
 # LOGFILE := $(YEAR)-Research-Diary.log
 # DVIFILE := $(YEAR)-Research-Diary.dvi
 # PSFILE := $(YEAR)-Research-Diary.ps
@@ -56,7 +58,18 @@ FILETD := $(YEARTD)/$(FNAMETD)
 
 .PHONY: today
 today:
-	latexmk -interaction=nonstopmode -outdir=$(OUTTD) -pdf -halt-on-error $(FILETD)
+	./add_entry
+	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(FILETD)
+
+.PHONY: entry
+entry:
+	./add_entry -f
+	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(FILETD)
+
+.PHONY: all
+all:
+	./add_entry
+	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(ALL)
 
 .PHONY: pdf
 pdf:
@@ -66,9 +79,13 @@ pdf:
 watch:
 	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -pvc -halt-on-error $(FILE)
 
+.PHONY: watchtd
+watchtd:
+	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -pvc -halt-on-error $(FILETD)
+
 .PHONY: clean
 clean:
-	rm -rf $(filter-out $(OUT)/$(FILE).pdf, $(wildcard $(OUT)/*))
+	rm -rf $(filter-out $(wildcard $(OUT)/*.pdf), $(wildcard $(OUT)/*))
 
 .PHONY: purge
 purge:
