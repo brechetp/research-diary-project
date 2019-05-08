@@ -20,16 +20,64 @@
 
 {\Huge @MONTH @day}
 
-\section*{Grad propagation}
+\section*{Gaussian}
 
-The arbitration between spec grad mode and FE grad modes was not finished (cf.
-notes of 2019-04-23/24). Tests were then not made on Gaussians but on MNIST. The difficulty of
-the model to learn the Gaussian dataset with the new formulation of the
-informative regularization might comes from a problem at that level.
+The thesis results were not using batchnormalization in their layers. Tests that were made again were using batchnormlization.
 
-Checked out working code on Gaussian that produced thesis plots
-(fig/thesis-b/good-good-25gaussian-zt-128-sinkhorn-entropy) to new branch 0405 is under
-investigation.
+ALI is using batch normalization in the generator, and not in the discriminators. This could be argued by the need of the generator to produce samples from an already normalize input, whereas the discriminator input is real data samples; using batch normalization in the discriminator would lead to a prolonged learning time (discriminant features would take longer to be learned ?)
+
+Also, the $\beta_1$ parameter of the Adam optimizer in ALI is choosen randomly $\beta_1 = 0.8$, and $\beta_2$ is default $\beta_2 = 0.999$
+The structure is similar to BidirectionalGAN (BiGAN) found in \cite{Donahue2016}.
+
+\subsection{With no informative regularization}
+
+When no regularization is used on the informative part, the learned
+distribution suffers from blurry edges (even when using Sinkhorn). Using
+antifinformative regularization corresponds to much sharper result.
+
+\input{figures/2019-05-08/compare-reg/figure}
+
+{\Large Important}
+The legacy working code was using quadratic $\Rtwo$ regularization. The recent code also works when using $\Rtwo$ for the (anti) informative regularization.
+
+\subsection{Different working situations}
+
+After tuning the network architecture and update strategies, the following situations lead to acceptable results
+
+\begin{itemize}
+    \item
+        Grad mode: set to \texttt{'FE'} for the dual networks (i.e. all samples, generated
+        and reals and Sinkhorn take part into updating the weights of the
+        shared layers)
+
+    \item
+        When dual updating the $Q_2$ network, the gradient mode of $Q_2$ is also set to \texttt{'FE'}
+    \item
+        With Sinkhorn, the update of the networks is done on the second pass of
+        the dual update method (i.e. not in the first, the shared networks are
+        kept identical between the two calls and the grad are accumulated
+        during the two passes). The update is then performed on the last pass.
+    \item
+        No batch normalization for D nor G (any layer)
+    \item
+        Bias for both G and D (all layers)
+    \item
+        Adam with $\beta_1 = 0.8, \beta_2 = 0.999$ for $G$, $\beta_1 = 0, \beta_2 = 0.9$ for $D$.
+    \item
+        Learning rate is taken as $\tau = 1 \cdot 10 ^{-4}$.
+\end{itemize}
+
+The main issues in the current results are
+\begin{itemize}
+    \item
+        The use of dual update of $Q_2$
+    \item
+        The use of quadratic regularizer for the anti-informative regularizer
+\end{itemize}
+
+Tests are made to check the extent of the previous parameters.
+
+Tests are also made with this setup as basis with WGAN-GP and InfoGAN. Results are not conclusive yet.
 
 \printbibliography{}
 \end{document}

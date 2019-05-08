@@ -29,7 +29,8 @@ SHELL := /bin/bash
 DATE := $(YEARTD)-$(MONTHTD)-$(DAYTD)
 FILE := main
 OUT  := build
-export TEXINPUTS := ./src/:$(TEXINPUTS)
+# export TEXINPUTS := ./src/:$(TEXINPUTS)
+export TEXINPUTS := ./include/:$(TEXINPUTS)
 # OUTTD  := $(YEARTD)
 
 # TEXFILE := $(YEARTD)/$(DATE).tex

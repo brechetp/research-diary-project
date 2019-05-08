@@ -22,10 +22,11 @@ if [ ! -d "$year" ]; then
     cd $year
     ln -s ../images/university_logo.eps .
     ln -s ../images/university_logo.png .
-    ln -s ../src/research_diary.sty .
     ln -s ../src/clean.sh clean
     ln -s ../src/compile_today.sh compile_today
-    ln -s ../src/usrcmd.sty .
+    ln -s ../include/usrcmd.sty .
+    ln -s ../include/research_diary.sty .
+    ln -s ../include/bibliography.bib .
     cd ..
 fi
 
