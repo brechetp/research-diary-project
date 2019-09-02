@@ -20,64 +20,40 @@
 
 {\Huge @MONTH @day}
 
-\section*{Gaussian}
+\section{CelebA}
 
-The thesis results were not using batchnormalization in their layers. Tests that were made again were using batchnormlization.
+The CelebA dataset should be mastered. Here is the first outline for testing the dataset.
 
-ALI is using batch normalization in the generator, and not in the discriminators. This could be argued by the need of the generator to produce samples from an already normalize input, whereas the discriminator input is real data samples; using batch normalization in the discriminator would lead to a prolonged learning time (discriminant features would take longer to be learned ?)
+\subsection{Parameters}
 
-Also, the $\beta_1$ parameter of the Adam optimizer in ALI is choosen randomly $\beta_1 = 0.8$, and $\beta_2$ is default $\beta_2 = 0.999$
-The structure is similar to BidirectionalGAN (BiGAN) found in \cite{Donahue2016}.
+Distance: L1 or cosine. The cosine seems to work better according to previous work but it is not a proper distance, so our theoretical analysis is somewhat improper.
 
-\subsection{With no informative regularization}
+Latent space: the InfoGAN paper uses a 10x10 categorical dimension and the rest noise (128 noise). The original CelebA dataset identified 40 categorical (binary) attributes to the images. Therefore, another possibility would be 40x2 categorical, a few continuous for the skin color, etc, and a few more for the noise (42).
 
-When no regularization is used on the informative part, the learned
-distribution suffers from blurry edges (even when using Sinkhorn). Using
-antifinformative regularization corresponds to much sharper result.
+Architecture for the newtork: the infoGAN has a relatively shallow network to train on CelebA as well, but uses 32x32 images (although display 64x64 images in their publication). So either use a 32x32 architecture as InfoGAN and afterwards enlarge the pictures, or train on 64x64 pictures with a different architecture (DCGAN).
 
-\input{figures/2019-05-08/compare-reg/figure}
+For today entropic regularization is used, although quadratic might yield much more stable results.
 
-{\Large Important}
-The legacy working code was using quadratic $\Rtwo$ regularization. The recent code also works when using $\Rtwo$ for the (anti) informative regularization.
-
-\subsection{Different working situations}
-
-After tuning the network architecture and update strategies, the following situations lead to acceptable results
+Check from previous notes which batch-normalization should be in use, which bias, etc.
 
 \begin{itemize}
-    \item
-        Grad mode: set to \texttt{'FE'} for the dual networks (i.e. all samples, generated
-        and reals and Sinkhorn take part into updating the weights of the
-        shared layers)
 
     \item
-        When dual updating the $Q_2$ network, the gradient mode of $Q_2$ is also set to \texttt{'FE'}
+        Batch normalization in all layers of D especially if the regularization is entropic
     \item
-        With Sinkhorn, the update of the networks is done on the second pass of
-        the dual update method (i.e. not in the first, the shared networks are
-        kept identical between the two calls and the grad are accumulated
-        during the two passes). The update is then performed on the last pass.
+        No bias in D, bias in G
     \item
-        No batch normalization for D nor G (any layer)
-    \item
-        Bias for both G and D (all layers)
-    \item
-        Adam with $\beta_1 = 0.8, \beta_2 = 0.999$ for $G$, $\beta_1 = 0, \beta_2 = 0.9$ for $D$.
-    \item
-        Learning rate is taken as $\tau = 1 \cdot 10 ^{-4}$.
+        Gradient mode set to ``{FE}'' in the update of the networks, and
+        actually update the weights in the second pass for Sinkhorn (check with the pub directory)
 \end{itemize}
 
-The main issues in the current results are
-\begin{itemize}
-    \item
-        The use of dual update of $Q_2$
-    \item
-        The use of quadratic regularizer for the anti-informative regularizer
-\end{itemize}
+\section{Correct the dataset}
 
-Tests are made to check the extent of the previous parameters.
-
-Tests are also made with this setup as basis with WGAN-GP and InfoGAN. Results are not conclusive yet.
+Do not use the HDF5 file for loading the datasets. Instead, use the tutorial
+explained \texttt{Dataset} class from \texttt{torch.utils}. The images are
+stored in binary format and loaded on the fly (allow for multiprocessing of the
+data). The previous argument (for having HDF5) was a speed issue, but it does
+not seem to be the case actually.
 
 \printbibliography{}
 \end{document}
