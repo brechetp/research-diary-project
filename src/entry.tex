@@ -8,18 +8,24 @@
 \newcommand{\userName}{Pierre Bréchet}
 \newcommand{\institution}{TUM}
 
-% The guts and glory
+% the different packages we use, should be located in include/ folder
 \usepackage{research_diary}
 \usepackage{usrcmd}
+% the bibliography, also locate in include/ folder
 \bibliography{bibliography}
 
+
 % Begin document.
-% Use \logoPNG or \logoEPS. If compiling with PDFTeX, use \logoPNG
 \begin{document}
-% \logoPNG
 
 {\Huge @MONTH @day}
-This is a blank template \cite{zotero-822}
+
+\begin{figure}[!t]
+    \includegraphics[width=0.8\textwidth]{latex_logo}
+    \caption{\LaTeX logo taken from \cite{wikipedia}}
+\end{figure}
+
+
 
 %\printbibliography{}
 \end{document}
