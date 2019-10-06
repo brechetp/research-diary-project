@@ -1,0 +1,3 @@
+caption: 'Results on CelebA, using a fixed cost between samples, without informative
+  regularization. Entropic regularization $\Rent$, $\eps = 1$, $\dztot = 128$, $\ltwosq$
+  cost, scaling factor: 33.4.'

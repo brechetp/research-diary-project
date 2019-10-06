@@ -74,7 +74,7 @@ entry:
 
 .PHONY: meeting
 meeting:
-	# ./add_meeting assumes the meeting is already added otherwise overwrite the
+	# ./src/add_meeting.sh assumes the meeting is already added otherwise overwrite the
 	# correct date
 	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(MEETING)
 

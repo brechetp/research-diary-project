@@ -1,0 +1,2 @@
+caption: Normal (left) vs bugged (right) visualization of the cropped CelebA dataset.
+  The bug disappears when not using mutli-thread processing.

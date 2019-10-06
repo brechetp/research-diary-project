@@ -1,0 +1,3 @@
+caption: 'Informative model on MNIST, with Sinkhorn Loss. $\lambda_1$ =2, $\eps=3.2$,
+  entropic regularization, distance scaling factor: 70, cost: $\ltwosq$, $\dztot =
+  74$, $\dzinfo = 3$'

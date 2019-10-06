@@ -1,0 +1,117 @@
+timeDuration: ' 0-02:19:01'
+timeStart: 05/04/2019 21:26:32
+activationD: leakyrelu
+activationFE: leakyrelu
+activationG: leakyrelu
+activation_prG: selu
+archiD:
+- mlp
+- - 512
+  - 512
+- - 512
+archiG:
+- mlp
+- - 512
+  - 512
+  - 512
+archiS:
+- mlp
+- - 128
+archiW:
+- mlp
+- - 128
+- - []
+batch_size: 100
+batch_size_gen: 100
+comment: null
+config: null
+cost: l1
+cuda: true
+dataroot: /storage/user/brechet/datasets/
+dataset: toy-25gaussian
+debug: 0
+device: !!python/object/apply:torch.device
+- cuda
+- 0
+div_info: l2
+dzcat: 25
+dzinfo: 0
+dztot: 128
+eps: 0.2
+epsS: 0
+epsW: 0.1
+forwardS: mm
+forwardW: mm
+gan_type: rotgan
+gaussianMeanStd:
+- 0
+- 1
+gpu_ids:
+- 0
+image_resize: null
+image_size: 1
+input_nc: 2
+isTrain: true
+iterFe: 1
+iterOT: 5
+jpath: /usr/stud/brechet/computational-ot/fig/thesis-b/25gaussian-zt-128-l1-entropy/epsW-0.1/run-rotgan-1
+logGrad: false
+lrD: 0.0002
+lrFE: 0.0002
+lrG: 0.0002
+lrPrGRatio: 0.01
+lrS: 0.0002
+lr_schedulerD: none
+lr_schedulerD_kwargs: {}
+lr_schedulerG: none
+lr_schedulerG_kwargs: {}
+max_dataset_size: .inf
+model: /usr/stud/brechet/computational-ot/fig/thesis-b/25gaussian-zt-128-l1-entropy/epsW-0.1_try-2/run-rotgan-1/model
+nEpoch: null
+nEpochStart: 916
+nGen: 50000
+nGenStart: 50000
+name: 25gaussian-zt-128-l1-entropy
+ncat: 1
+ndf: 16
+nfc: 5
+ngf: 16
+ngpu: 1
+nlayers_prG: 1
+num_dual_cnn: 1
+num_threads: 4
+optimD: adam
+optimD_kwargs: {}
+optimFE: adam
+optimFE_kwargs: {}
+optimG: adam
+optimG_kwargs: {}
+optimS: adam
+optimS_kwargs: {}
+outdir: /usr/stud/brechet/computational-ot/fig/thesis-b/
+precision:
+- 0
+- 0
+preprocessG: none
+random_seed: 7382
+reg: entropy
+runTotal: 1
+save_model: true
+savedJournal: /usr/stud/brechet/computational-ot/fig/thesis-b/25gaussian-zt-128-l1-entropy/epsW-0.1_try-2/run-rotgan-1/journal.pkl
+scaleDistance: 10
+scaling_distance_factor: 17.066347228201295
+sinkhorn: false
+slopeLReLU: 0.2
+suffix: epsW-0.1_try-2
+uniformRange:
+- -1
+- 1
+updateDual: sim
+updateFe: dual
+useBiasD: FE
+useBiasG: all
+useFe: false
+use_batchnorm: none
+verbose: false
+weight_init: normal
+weight_init_PrG: normal
