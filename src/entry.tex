@@ -20,40 +20,6 @@
 
 {\Huge @MONTH @day}
 
-\section{CelebA}
-
-The CelebA dataset should be mastered. Here is the first outline for testing the dataset.
-
-\subsection{Parameters}
-
-Distance: L1 or cosine. The cosine seems to work better according to previous work but it is not a proper distance, so our theoretical analysis is somewhat improper.
-
-Latent space: the InfoGAN paper uses a 10x10 categorical dimension and the rest noise (128 noise). The original CelebA dataset identified 40 categorical (binary) attributes to the images. Therefore, another possibility would be 40x2 categorical, a few continuous for the skin color, etc, and a few more for the noise (42).
-
-Architecture for the newtork: the infoGAN has a relatively shallow network to train on CelebA as well, but uses 32x32 images (although display 64x64 images in their publication). So either use a 32x32 architecture as InfoGAN and afterwards enlarge the pictures, or train on 64x64 pictures with a different architecture (DCGAN).
-
-For today entropic regularization is used, although quadratic might yield much more stable results.
-
-Check from previous notes which batch-normalization should be in use, which bias, etc.
-
-\begin{itemize}
-
-    \item
-        Batch normalization in all layers of D especially if the regularization is entropic
-    \item
-        No bias in D, bias in G
-    \item
-        Gradient mode set to ``{FE}'' in the update of the networks, and
-        actually update the weights in the second pass for Sinkhorn (check with the pub directory)
-\end{itemize}
-
-\section{Correct the dataset}
-
-Do not use the HDF5 file for loading the datasets. Instead, use the tutorial
-explained \texttt{Dataset} class from \texttt{torch.utils}. The images are
-stored in binary format and loaded on the fly (allow for multiprocessing of the
-data). The previous argument (for having HDF5) was a speed issue, but it does
-not seem to be the case actually.
 
 \printbibliography{}
 \end{document}
