@@ -46,14 +46,16 @@ if [ -f "$filename" ]; then
     fi
 fi
 
+# copy the source entry to the file
 cp ../src/entry.tex $filename
 
+# take care of replacing the different keywords in the template
 platform=`uname`
 if [ "$platform" = "Darwin" ]; then
-    sed -i "" "s/@year/$year/g" $filename
-    sed -i "" "s/@MONTH/`date +%B`/g" $filename
-    sed -i "" "s/@dday/$day/g" $filename
-    sed -i "" "s/@day/`date +%e`/g" $filename
+    sed -i  "s/@year/$year/g" $filename
+    sed -i  "s/@MONTH/`date +%B`/g" $filename
+    sed -i  "s/@dday/$day/g" $filename
+    sed -i  "s/@day/`date +%e`/g" $filename
 else
     sed -i "s/@year/$year/g" $filename
     sed -i "s/@MONTH/`date +%B`/g" $filename

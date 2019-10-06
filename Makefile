@@ -4,15 +4,17 @@
 #  Author:   Mikhail Klassen
 #  Email:    klassm@mcmaster.ca
 #  Created:  21 November 2011
-#  Modified: 3 January 2012
+#  Modified: 06 October 2019
+ADDENTRY_SCRIPT := src/add_entry.sh
 
 # Set the diary year you wish to compile and user info
-YEAR := 2012
 # year=`date +%G`
 # month=`date +%m`
 # day=`date +%d`
 # AUTHOR := FirstName LastName
 # INSTITUTION := InstitutionName
+#
+# the different timestamps
 YEARTD := $(shell date +%G)
 MONTHTD := $(shell date +%m)
 DAYTD := $(shell date +%d)
@@ -36,8 +38,9 @@ export TEXINPUTS := ./include/:$(TEXINPUTS)
 # TEXFILE := $(YEARTD)/$(DATE).tex
 FILETD := $(YEARTD)/$(DATE)
 ALL := $(wildcard $(YEARTD)/*.tex)
-# MEETING := $(YEARTD)/$(DATE)-meeting
-MEETING := $(YEARTD)/2019-05-09-meeting
+# another template is possible
+MEETING := $(YEARTD)/$(DATE)-meeting
+#MEETING := $(YEARTD)/2019-05-09-meeting
 # LOGFILE := $(YEAR)-Research-Diary.log
 # DVIFILE := $(YEAR)-Research-Diary.dvi
 # PSFILE := $(YEAR)-Research-Diary.ps
@@ -61,12 +64,12 @@ MEETING := $(YEARTD)/2019-05-09-meeting
 
 .PHONY: today
 today:
-	./add_entry
+	$(shell ADDENTRY_SCRIPT $<)
 	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(FILETD)
 
-.PHONY: entry
+.PHONY: entry # to force the new entry to be copied
 entry:
-	./add_entry -f
+	$(ADDENTRY_SCRIPT) -f
 	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(FILETD)
 
 .PHONY: meeting
@@ -77,7 +80,7 @@ meeting:
 
 .PHONY: all
 all:
-	./add_entry
+	$(ADDENTRY_SCRIPT)
 	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(ALL)
 
 .PHONY: pdf
