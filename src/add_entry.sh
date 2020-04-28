@@ -5,6 +5,7 @@ seminar=
 meeting=
 dryrun=
 verbose=
+pres=
 while getopts fsmvtd flags
 do
     case $flags in
@@ -13,6 +14,7 @@ do
         m) meeting=1;;
         v) verbose=1;;
         d) dryrun=1;;
+        p) pres=1;;
         ?) printf "Usage: %s: [-f]\n" $0
             exit 2;;
     esac
@@ -32,6 +34,7 @@ title="${title// /_}"
 fname=''
 
 [ -n "$seminar" ] && fname='-seminar'
+[ -n "$pres" ] && fname='-pres'
 [ -n "$title" ] && fname="$fname-$title"
 
 [ -n "$verbose" ] && echo "Today is $year / $month / $day"
@@ -45,15 +48,22 @@ fname=''
 
 cd $year
 
-[ -n "$seminar" ] && src='../src/seminar.tex' ||
-    [ -n "$meeting" ] && src='../src/meeting.tex' ||
-	src='../src/entry.tex'
+if [ -n "$seminar" ];
+then
+    src='../src/seminar.tex'
+elif [ -n "$meeting" ] ;
+then
+    src='../src/meeting.tex'
+elif [ -n "$pres" ] ;
+then
+    src='../src/pres.tex'
+else
+    src='../src/entry.tex'
+fi
 
 dst="$tstampstr$fname.tex"
 echo $dst
 [ -n "$dryrun" ] && exit 0
-
-
 
 if [ -f "$dst" ]; then
     if [ -z "$force" ]; then

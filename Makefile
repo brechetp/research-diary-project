@@ -57,6 +57,8 @@ file:
 
 .PHONY: last
 last:
+
+	$(eval FILE := $(DIR)/$(shell readlink $(DIR)/last.tex))
 	#$(ADDENTRY_SCRIPT)
 	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(FILE)
 
@@ -68,13 +70,20 @@ entry:
 
 .PHONY: seminar
 seminar:
-	$(eval FILE := $(DIR)/$($(SHELL) $(ADDENTRY_SCRIPT) -s $(TITLE)))
+	$(eval FILE := $(DIR)/$(shell $(ADDENTRY_SCRIPT) -s $(TITLE)))
+	@echo $(FILE)
 	# correct date
 	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(FILE)
 
 .PHONY: meeting
 meeting:
-	$(eval(FILE := $(SHELL) $(ADDENTRY_SCRIPT) -m $(TITLE))
+	$(eval FILE := $(DIR)/$(shell $(ADDENTRY_SCRIPT) -m $(TITLE)))
+	# correct date
+	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(FILE)
+
+.PHONY: pres
+pres:
+	$(eval FILE := $(DIR)/$(shell $(ADDENTRY_SCRIPT) -p $(TITLE)))
 	# correct date
 	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(FILE)
 
