@@ -36,11 +36,13 @@ export TEXINPUTS := ./include/:$(TEXINPUTS)
 # OUTTD  := $(YEARTD)
 
 # TEXFILE := $(YEARTD)/$(DATE).tex
-FILETD := $(YEARTD)/$(DATE)
+FILE := $(YEARTD)/$(DATE)
+
 ALL := $(wildcard $(YEARTD)/*.tex)
-# another template is possible
+
+# MEETING := $(YEARTD)/$(DATE)-meeting
 MEETING := $(YEARTD)/$(DATE)-meeting
-#MEETING := $(YEARTD)/2019-05-09-meeting
+SEMINAR := $(YEARTD)/$(DATE)-seminar
 # LOGFILE := $(YEAR)-Research-Diary.log
 # DVIFILE := $(YEAR)-Research-Diary.dvi
 # PSFILE := $(YEAR)-Research-Diary.ps
@@ -62,15 +64,25 @@ MEETING := $(YEARTD)/$(DATE)-meeting
 #     -$(RM) *.tmp
 #     -@echo 'Done cleaning'
 
-.PHONY: today
-today:
-	$(shell ADDENTRY_SCRIPT $<)
-	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(FILETD)
+.PHONY: file
+file:
+	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(FILE)
+
+.PHONY: last
+last:
+	#$(ADDENTRY_SCRIPT)
+	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(FILE)
 
 .PHONY: entry # to force the new entry to be copied
 entry:
 	$(ADDENTRY_SCRIPT) -f
-	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(FILETD)
+	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(FILE)
+
+.PHONY: seminar
+seminar:
+	$(ADDENTRY_SCRIPT) -s #assumes the seminar is already added otherwise overwrite the
+	# correct date
+	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(SEMINAR)
 
 .PHONY: meeting
 meeting:
@@ -93,11 +105,12 @@ watch:
 
 .PHONY: watchtd
 watchtd:
-	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -pvc -halt-on-error $(FILETD)
+	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -pvc -halt-on-error $(FILE)
 
 .PHONY: clean
 clean:
 	rm -rf $(filter-out $(wildcard $(OUT)/*.pdf), $(wildcard $(OUT)/*))
+	rm -rf $(filter-out $(wildcard $(YEARTD)/*.tex) $(wildcard $(YEARTD)/*.sty), $(wildcard $(YEARTD)/*))
 
 .PHONY: purge
 purge:
