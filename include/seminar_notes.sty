@@ -1,0 +1,197 @@
+\ProvidesPackage{seminar_notes}
+%%%%%%%%% MIKHAIL KLASSEN - RESEARCH DIARY HEADER %%%%%%%%%%%%
+%% @author:  Mikhail Klassen                                %%
+%% @contact: mikhail.klassen@gmail.com                      %%
+%% @revised:    12 / January / 2011                         %%
+%% @license: Creative Commons Share Alike 3.0               %%
+%%           http://creativecommons.org/licenses/by-sa/3.0/ %%
+%%                                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+% \usepackage[sc]{mathpazo}  % font for math in palatino
+\usepackage[ngerman,american]{babel}
+\usepackage[autostyle]{csquotes}  % quoting package
+\usepackage[%
+  backend=biber,
+  url=false,
+  style=numeric,
+  maxnames=2,
+  minnames=1,
+  maxbibnames=99,
+  giveninits,
+  isbn=false,
+  doi=false,
+  uniquename=init]{biblatex} % TODO: adapt citation style
+\usepackage{fancyhdr}  % headings
+%\bibliographystyle{abbrv}
+
+% the font, sans serif
+%\renewcommand{\familydefault}{\sfdefault}
+\usepackage{tgpagella}
+
+% for dates
+\usepackage{datetime}
+
+% pseudocode environment
+\usepackage{algorithm}
+%\usepackage{algorithmic}
+\usepackage{algpseudocode}
+
+% \usepackage[colorlinks]{hyperref}
+\usepackage{bm} % for bold math symbols
+\usepackage{amsfonts}
+%\usepackage{bbold}
+\usepackage{mathtools} % for the new delimiters
+\usepackage{makeidx}
+
+\usepackage{commath}  % for the differential operator
+
+% St Mary Road  symbols for math notation https://www.ctan.org/pkg/stmaryrd
+%\usepackage{stmaryrd}
+\usepackage[super]{nth} % for st, nd, rd, th subscripts
+
+% https://tex.stackexchange.com/questions/40/how-do-i-label-different-rows-or-columns-of-a-matrix-using-braces
+\usepackage{amsmath} % math environment, includes align DOES NOT WORK WITH NATH
+\usepackage{amssymb}
+\usepackage{amsthm} % for theorem and definition environement
+\usepackage{array}
+
+% \usepackage{amsmath}
+\usepackage{amsfonts}
+% \usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[hmargin=2cm,vmargin=2.5cm]{geometry}
+\usepackage{multirow}
+\usepackage{wrapfig}
+% \usepackage{epsfig}  % for obsolete graphics?
+% for adjust box width graphics
+\usepackage[export]{adjustbox}
+\usepackage{float}
+
+\usepackage{enumitem}  % for nested enumertions list
+
+\newlist{inparaenum}{enumerate}{2} % allow two levels of nested lists
+% \setlist[inparaenum]{nosep} % compact spacing for all nestings
+\setlist[inparaenum,1]{label=\arabic*.} % labels for the first level
+\setlist[inparaenum,2]{label=\arabic{inparaenumi}\alph*)}  % labels for the second level 1a) ...
+
+% beak equation package for left and right on multiple lines
+\usepackage{breqn}
+\usepackage{framed}
+\usepackage{textcomp}  % obsolete, as part of the distro?
+\usepackage{color}
+\usepackage{subcaption}  % the subcaption package % ADDED
+\usepackage{scrhack} % necessary for listings package
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{booktabs}  % better tables
+\usepackage[final]{microtype}
+\usepackage{caption}
+% \usepackage[usenames,dvipsnames]{pstricks}
+\definecolor{darkblue}{RGB}{47,68,117}
+\definecolor{lightgray}{gray}{0.95}
+
+\usepackage{mdframed}
+% Define TUM corporate design colors
+% Taken from http://portal.mytum.de/corporatedesign/index_print/vorlagen/index_farben
+\definecolor{TUMBlue}{HTML}{0065BD}
+\definecolor{TUMSecondaryBlue}{HTML}{005293}
+\definecolor{TUMSecondaryBlue2}{HTML}{003359}
+\definecolor{TUMBlack}{HTML}{000000}
+\definecolor{TUMWhite}{HTML}{FFFFFF}
+\definecolor{TUMDarkGray}{HTML}{333333}
+\definecolor{TUMGray}{HTML}{808080}
+\definecolor{TUMLightGray}{HTML}{CCCCC6}
+\definecolor{TUMAccentGray}{HTML}{DAD7CB}
+\definecolor{TUMAccentOrange}{HTML}{E37222}
+\definecolor{TUMAccentGreen}{HTML}{A2AD00}
+\definecolor{TUMAccentLightBlue}{HTML}{98C6EA}
+\definecolor{TUMAccentBlue}{HTML}{64A0C8}
+
+\usepackage{hyperref}
+\hypersetup{
+    % pdftitle={Research Diary},                    % title
+    % pdfauthor={\userName $\;$ (\institution)},    % author
+    % pdfsubject={Physics \& Astronomy},            % subject
+    colorlinks=true,        % false: boxed links; true: colored links
+    linkcolor=darkblue,     % color of internal links
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=blue           % color of external links
+}
+
+\usepackage[noabbrev]{cleveref}
+
+% Settings for pgfplots
+\pgfplotsset{compat=newest}
+\pgfplotsset{
+  % For available color names, see http://www.latextemplates.com/svgnames-colors
+  cycle list={TUMBlue\\TUMAccentOrange\\TUMAccentGreen\\TUMSecondaryBlue2\\TUMDarkGray\\},
+}
+\usepgfplotslibrary{groupplots}  % see https://github.com/nschloe/matplotlib2tikz
+\usepgfplotslibrary{dateplot}
+
+% Settings for lstlistings
+\lstset{%
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  autogobble,
+  keywordstyle=\bfseries\color{TUMBlue},
+  stringstyle=\color{TUMAccentGreen}
+}
+
+\usepackage{enumitem}  % for numbering the enumerate with custom symbols tex.stackexchange.com/questions/7032/good-way-to-make-textcircled-numbers
+
+% graphics path
+\graphicspath{{figures/}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Notes on use of hyperlinks:
+%% \url{http://www.wikibooks.org}
+%% \href{http://www.wikibooks.org}{wikibooks home}
+%% \href{mailto:email@site.com}{email@site.com}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagestyle{fancy}
+\setlength\parindent{0in}
+\setlength\parskip{0.1in}
+\setlength\headheight{15pt}
+
+%%%%%%%%%%% HEADER / FOOTER %%%%%%%%%%%
+\rhead{\workingDate}
+% \chead{\textsc{Research Diary}}
+% \lhead{\textsc{\userName}}
+\rfoot{\textsc{\thepage}}
+\cfoot{\textit{Last modified: \today}}
+% \lfoot{\textsc{\institution}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%% NEW COMMANDS %%%%%%%%%%%%%%
+\newcommand{\logoEPS}{% useless?
+  \noindent % University Logo
+  \begin{wrapfigure}{r}{0.1\textwidth}
+    \vspace{-38pt}
+    \begin{center}
+      \includegraphics[width=0.1\textwidth]{university_logo.eps}
+    \end{center}
+    \vspace{-100pt}
+  \end{wrapfigure}
+}
+
+\newcommand{\logoPNG}{%
+  \noindent % University Logo
+  \begin{wrapfigure}{r}{0.1\textwidth}
+    \vspace{-38pt}
+    \begin{center}
+      \includegraphics[width=0.1\textwidth]{university_logo.png}
+    \end{center}
+    \vspace{-100pt}
+  \end{wrapfigure}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
