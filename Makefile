@@ -15,40 +15,27 @@ ADDENTRY_SCRIPT := src/add_entry.sh
 # INSTITUTION := InstitutionName
 #
 # the different timestamps
-YEARTD := $(shell date +%G)
-MONTHTD := $(shell date +%m)
-DAYTD := $(shell date +%d)
+YEAR := $(shell date +%G)
+MONTH := $(shell date +%m)
+DAY := $(shell date +%d)
 
 # TEXFILE=$year-$month-$day.tex
 # PSFILE=$year-$month-$day.ps
 # DVIFILE=$year-$month-$day.dvi
 # PDFFILE=$year-$month-$day.pdf
 #
-# Do not edit past this line
 RM := rm -rf
-SHELL := /bin/bash
+SHELL := /bin/zsh
 #
-DATE := $(YEARTD)-$(MONTHTD)-$(DAYTD)
-FILE := main
+
+
+DIR := $(YEAR)
+ALL := $(wildcard $(DIR)/*.tex)
+
 OUT  := build
 # export TEXINPUTS := ./src/:$(TEXINPUTS)
 export TEXINPUTS := ./include/:$(TEXINPUTS)
-# OUTTD  := $(YEARTD)
 
-# TEXFILE := $(YEARTD)/$(DATE).tex
-FILE := $(YEARTD)/$(DATE)
-
-ALL := $(wildcard $(YEARTD)/*.tex)
-
-# MEETING := $(YEARTD)/$(DATE)-meeting
-MEETING := $(YEARTD)/$(DATE)-meeting
-SEMINAR := $(YEARTD)/$(DATE)-seminar
-# LOGFILE := $(YEAR)-Research-Diary.log
-# DVIFILE := $(YEAR)-Research-Diary.dvi
-# PSFILE := $(YEAR)-Research-Diary.ps
-# PDFFILE := $(YEAR)-Research-Diary.pdf
-# AUXFILE := $(YEAR)-Research-Diary.aux
-# OUTFILE := $(YEAR)-Research-Diary.out
 
 # anthology:
 #     -@echo 'Creating anthology for research diary entries from the year $(YEAR)'
@@ -75,24 +62,24 @@ last:
 
 .PHONY: entry # to force the new entry to be copied
 entry:
-	$(ADDENTRY_SCRIPT) -f
+	$(eval FILE := $(DIR)/$(shell $(ADDENTRY_SCRIPT) $(TITLE)))
+	@echo $(FILE)
 	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(FILE)
 
 .PHONY: seminar
 seminar:
-	$(ADDENTRY_SCRIPT) -s #assumes the seminar is already added otherwise overwrite the
+	$(eval FILE := $(DIR)/$($(SHELL) $(ADDENTRY_SCRIPT) -s $(TITLE)))
 	# correct date
-	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(SEMINAR)
+	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(FILE)
 
 .PHONY: meeting
 meeting:
-	# ./src/add_meeting.sh assumes the meeting is already added otherwise overwrite the
+	$(eval(FILE := $(SHELL) $(ADDENTRY_SCRIPT) -m $(TITLE))
 	# correct date
-	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(MEETING)
+	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(FILE)
 
 .PHONY: all
 all:
-	$(ADDENTRY_SCRIPT)
 	latexmk -interaction=nonstopmode -outdir=$(OUT) -pdf -halt-on-error $(ALL)
 
 .PHONY: pdf
@@ -110,7 +97,7 @@ watchtd:
 .PHONY: clean
 clean:
 	rm -rf $(filter-out $(wildcard $(OUT)/*.pdf), $(wildcard $(OUT)/*))
-	rm -rf $(filter-out $(wildcard $(YEARTD)/*.tex) $(wildcard $(YEARTD)/*.sty), $(wildcard $(YEARTD)/*))
+	rm -rf $(filter-out $(wildcard $(YEAR)/*.tex) $(wildcard $(YEAR)/*.sty), $(wildcard $(YEAR)/*))
 
 .PHONY: purge
 purge:

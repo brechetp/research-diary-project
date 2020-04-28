@@ -1,66 +1,91 @@
-#!/bin/sh
+#!/bin/zsh
 
 force=
-while getopts f flags
+seminar=
+meeting=
+dryrun=
+verbose=
+while getopts fsmvtd flags
 do
     case $flags in
         f) force=1;;
+        s) seminar=1;;
+        m) meeting=1;;
+        v) verbose=1;;
+        d) dryrun=1;;
         ?) printf "Usage: %s: [-f]\n" $0
             exit 2;;
     esac
 done
 
-year=`date +%G`
+shift $(($OPTIND-1))
+
+year=`date +%Y`
 month=`date +%m`
 day=`date +%d`
 
-echo "Today is $year / $month / $day"
+tstampstr="$year-$month-$day" 
 
-if [ ! -d "$year" ]; then
-    mkdir $year
-    #mkdir $year/images
-    #cd $year
-    #ln -s ../images/university_logo.eps .
-    #ln -s ../images/university_logo.png .
-    #ln -s ../src/clean.sh clean
-    #ln -s ../src/compile_today.sh compile_today
-    #ln -s ../include/usrcmd.sty .
-    #ln -s ../include/research_diary.sty .
-    #ln -s ../include/bibliography.bib .
-    #cd ..
-fi
+[ -n "$title$" ] && title="${(L)@}" # lower case title
+title="${title// /_}"
 
-if [ -d "$year" ]; then
-    echo "Adding new entry to directory $year."
-fi
+fname=''
+
+[ -n "$seminar" ] && fname='-seminar'
+[ -n "$title" ] && fname="$fname-$title"
+
+[ -n "$verbose" ] && echo "Today is $year / $month / $day"
+
+
+[ ! -d "$year" ] && mkdir $year
+
+#if [ -d "$year" ]; then
+    #echo "Adding new entry to directory $year."
+#fi
 
 cd $year
-filename=$year-$month-$day.tex
 
-if [ -f "$filename" ]; then
+[ -n "$seminar" ] && src='../src/seminar.tex' ||
+    [ -n "$meeting" ] && src='../src/meeting.tex' ||
+	src='../src/entry.tex'
+
+dst="$tstampstr$fname.tex"
+echo $dst
+[ -n "$dryrun" ] && exit 0
+
+
+
+if [ -f "$dst" ]; then
     if [ -z "$force" ]; then
-        echo "A file called '$filename' already exists in diretory $year. Aborting addition of new entry."
+        [ -n "$verbose" ] && echo "A file called '$dst' already exists in diretory $year. Aborting copy of new entry."
         exit
     else
-        echo "Overriding existing '$filename'"
+        [ -n "$verbose" ] echo "Overriding existing '$dst'"
     fi
 fi
 
-# copy the source entry to the file
-cp ../src/entry.tex $filename
+# copy the src entry to the file
+cp $src $dst 
 
+
+[ -L 'last.tex' ] && unlink 'last.tex' 
+
+ln -s $dst 'last.tex'
+
+git add $dst
 # take care of replacing the different keywords in the template
 platform=`uname`
-if [ "$platform" = "Darwin" ]; then
-    sed -i  "s/@year/$year/g" $filename
-    sed -i  "s/@MONTH/`date +%B`/g" $filename
-    sed -i  "s/@dday/$day/g" $filename
-    sed -i  "s/@day/`date +%e`/g" $filename
-else
-    sed -i "s/@year/$year/g" $filename
-    sed -i "s/@MONTH/`date +%B`/g" $filename
-    sed -i "s/@dday/$day/g" $filename
-    sed -i "s/@day/`date +%e`/g" $filename
-fi
+#if [ "$platform" = "Darwin" ]; then
+    #sed -i "s/@year/$year/g" $dst
+    #sed -i "s/@MONTH/`date +%B`/g" $dst
+    #sed -i "s/@dday/$day/g" $dst
+    #sed -i "s/@day/`date +%e`/g" $dst
+#else
+sed -i "s/@year/$year/g" $dst
+sed -i "s/@MONTH/`date +%B`/g" $dst
+sed -i "s/@dday/$day/g" $dst
+sed -i "s/@day/`date +%e`/g" $dst
+#fi
 
-echo "Finished adding $filename to $year."
+[ -n "$verbose" ] && echo "Finished adding $dst to $year."
+
